@@ -7,3 +7,5 @@ spring:
     initialization-mode=always:jpa:
 mybatis:
   mapper-locations: classpath*:/mapper/*.xml
+caesar-cipher:
+  shift: 3
