@@ -4,11 +4,28 @@
 
   <resultMap type="com.ykmura.springmybatisencrypt.model.User" id="user">
     <id column="id" property="id"/>
+    <result column="name" property="name" javaType="CaesarCipherString"/>
+    <result column="email" property="email" javaType="CaesarCipherString"/>
+  </resultMap>
+
+  <resultMap type="com.ykmura.springmybatisencrypt.model.User" id="userWithoutDeCipher">
+    <id column="id" property="id"/>
     <result column="name" property="name"/>
     <result column="email" property="email"/>
   </resultMap>
 
   <select id="findById" resultMap="user">
+    select
+      id,
+      name,
+      email
+    from
+      user
+    where
+      id = #{id}
+  </select>
+
+  <select id="findByIdWithoutDecipher" resultMap="userWithoutDeCipher">
     select
       id,
       name,
@@ -26,7 +43,7 @@
       email)
     values (
       #{id},
-      #{name},
-      #{email})
+      #{name, javaType=CaesarCipherString},
+      #{email, javaType=CaesarCipherString})
   </insert>
 </mapper>
